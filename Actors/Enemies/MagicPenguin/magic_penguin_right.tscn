@@ -1,0 +1,94 @@
+[gd_scene load_steps=13 format=3 uid="uid://bo3f1e7synyuh"]
+
+[ext_resource type="Script" path="res://Source/Actors/Enemies/MagicPenguin/magic_penguin_right.gd" id="1_ww1ej"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="2_0eb7n"]
+[ext_resource type="PackedScene" uid="uid://bdayujo711hgp" path="res://Source/Actors/stats.tscn" id="2_hdchj"]
+[ext_resource type="Texture2D" uid="uid://c58eirp83qdm" path="res://Retribution 8-Bit Project Assests/EnemySprites/Penguin.png" id="2_ww7yh"]
+[ext_resource type="PackedScene" uid="uid://g4e18e0xq4c3" path="res://Source/Hitboxes and Hurtboxes/hitbox.tscn" id="5_3ncjn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7datv"]
+size = Vector2(22, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_peclp"]
+atlas = ExtResource("2_ww7yh")
+region = Rect2(0, 0, 20, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gb4ab"]
+atlas = ExtResource("2_ww7yh")
+region = Rect2(20, 0, 20, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ashsh"]
+atlas = ExtResource("2_ww7yh")
+region = Rect2(40, 0, 20, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i8q5t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_peclp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gb4ab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ashsh")
+}],
+"loop": true,
+"name": &"Flying",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdusr"]
+size = Vector2(20, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0vb1v"]
+size = Vector2(20, 6)
+
+[node name="MagicPenguinRight" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ww1ej")
+
+[node name="Stats" parent="." instance=ExtResource("2_hdchj")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-9.53674e-07, -2)
+shape = SubResource("RectangleShape2D_7datv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(0, -4)
+rotation = 1.5708
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_i8q5t")
+animation = &"Flying"
+autoplay = "Flying"
+frame_progress = 0.869806
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_0eb7n")]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(-9.53674e-07, -2)
+shape = SubResource("RectangleShape2D_kdusr")
+
+[node name="Hitbox" parent="." instance=ExtResource("5_3ncjn")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(-9.53674e-07, -2)
+shape = SubResource("RectangleShape2D_0vb1v")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1.14441e-06, -2)
+scale = Vector2(1.1, 0.4)
+
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered" flags=18]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited" flags=18]
+
+[editable path="Hurtbox"]
+[editable path="Hitbox"]

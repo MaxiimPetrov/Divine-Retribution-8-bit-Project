@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=3 uid="uid://c7yjhj82mqogq"]
+
+[ext_resource type="PackedScene" uid="uid://bdayujo711hgp" path="res://Source/Actors/stats.tscn" id="1_b6mgv"]
+[ext_resource type="Script" path="res://Source/Actors/Enemies/ArmoredBear/armored_bear_enemy.gd" id="1_pvym4"]
+[ext_resource type="Texture2D" uid="uid://b0rnc0f1pc2ar" path="res://Retribution 8-Bit Project Assests/EnemySprites/BearArmored.png" id="2_m7v0i"]
+[ext_resource type="PackedScene" uid="uid://c3eqck87vghmd" path="res://Source/Hitboxes and Hurtboxes/player_detection_zone.tscn" id="4_boi24"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="5_gmt2j"]
+[ext_resource type="PackedScene" uid="uid://g4e18e0xq4c3" path="res://Source/Hitboxes and Hurtboxes/hitbox.tscn" id="6_yo55i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nymds"]
+atlas = ExtResource("2_m7v0i")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjwjy"]
+atlas = ExtResource("2_m7v0i")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y5ja3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nymds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjwjy")
+}],
+"loop": true,
+"name": &"Running",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ets5h"]
+size = Vector2(36, 18)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q7g4a"]
+radius = 900.002
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_km4mx"]
+size = Vector2(32, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fp7np"]
+size = Vector2(28, 16)
+
+[node name="ArmoredBearEnemy" type="CharacterBody2D"]
+collision_layer = 0
+floor_constant_speed = true
+script = ExtResource("1_pvym4")
+
+[node name="Stats" parent="." instance=ExtResource("1_b6mgv")]
+max_health = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(0, -1)
+scale = Vector2(0.563, 0.625)
+sprite_frames = SubResource("SpriteFrames_y5ja3")
+animation = &"Running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ets5h")
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource("4_boi24")]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+self_modulate = Color(1, 1, 1, 0.219608)
+shape = SubResource("CircleShape2D_q7g4a")
+
+[node name="Hurtbox" parent="." instance=ExtResource("5_gmt2j")]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("RectangleShape2D_km4mx")
+
+[node name="Hitbox" parent="." instance=ExtResource("6_yo55i")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("RectangleShape2D_fp7np")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-2.38419e-07, 4.17233e-07)
+scale = Vector2(1.2, 0.8)
+
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+
+[editable path="PlayerDetectionZone"]
+[editable path="Hurtbox"]
+[editable path="Hitbox"]

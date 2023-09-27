@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://bdsqt37f2st3v"]
+
+[ext_resource type="Script" path="res://Source/Actors/Player/Abilities/fireball_cast_effect.gd" id="1_0w5ht"]
+[ext_resource type="Texture2D" uid="uid://bqodjmkt0ltu5" path="res://Retribution 8-Bit Project Assests/PlayerSprites/Cast_FX.png" id="1_01uad"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5sfa6"]
+atlas = ExtResource("1_01uad")
+region = Rect2(0, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph30x"]
+atlas = ExtResource("1_01uad")
+region = Rect2(72, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2ap1"]
+atlas = ExtResource("1_01uad")
+region = Rect2(144, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guhvm"]
+atlas = ExtResource("1_01uad")
+region = Rect2(216, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xoeoq"]
+atlas = ExtResource("1_01uad")
+region = Rect2(288, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykdya"]
+atlas = ExtResource("1_01uad")
+region = Rect2(360, 0, 72, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_luhs4"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_5sfa6")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ph30x")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_w2ap1")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_guhvm")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_xoeoq")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ykdya")
+}],
+"loop": false,
+"name": &"Effect",
+"speed": 5.0
+}]
+
+[node name="FireballCastEffect" type="Node2D"]
+script = ExtResource("1_0w5ht")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+sprite_frames = SubResource("SpriteFrames_luhs4")
+animation = &"Effect"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

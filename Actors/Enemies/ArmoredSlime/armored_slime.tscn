@@ -1,0 +1,126 @@
+[gd_scene load_steps=14 format=3 uid="uid://dcraayskyof6o"]
+
+[ext_resource type="Texture2D" uid="uid://bdbjovki831rf" path="res://Retribution 8-Bit Project Assests/EnemySprites/SlimeArmored.png" id="1_np1m8"]
+[ext_resource type="Script" path="res://Source/Actors/Enemies/ArmoredSlime/armored_slime.gd" id="1_yumjm"]
+[ext_resource type="PackedScene" uid="uid://g4e18e0xq4c3" path="res://Source/Hitboxes and Hurtboxes/hitbox.tscn" id="3_3525o"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="4_q6com"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv61m"]
+atlas = ExtResource("1_np1m8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bf1gy"]
+atlas = ExtResource("1_np1m8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kmyxn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv61m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bf1gy")
+}],
+"loop": true,
+"name": &"Move",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_l3g68"]
+resource_name = "BlinkWhite"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_f5602"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u3m6n"]
+_data = {
+"BlinkWhite": SubResource("Animation_l3g68"),
+"RESET": SubResource("Animation_f5602")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fv36j"]
+size = Vector2(16, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8hes"]
+size = Vector2(14, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1idoe"]
+size = Vector2(16, 10)
+
+[node name="ArmoredSlime" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_yumjm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_kmyxn")
+animation = &"Move"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_u3m6n")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_fv36j")
+
+[node name="Hitbox" parent="." instance=ExtResource("3_3525o")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_a8hes")
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_q6com")]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_1idoe")
+
+[node name="LedgeCheckLeft" type="RayCast2D" parent="."]
+position = Vector2(-7, 0)
+target_position = Vector2(0, 0.1)
+
+[node name="LedgeCheckRight" type="RayCast2D" parent="."]
+position = Vector2(6, 0)
+target_position = Vector2(0, 0.1)
+
+[node name="LedgeChecksTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+
+[editable path="Hitbox"]
+[editable path="Hurtbox"]

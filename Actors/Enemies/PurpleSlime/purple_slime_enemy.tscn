@@ -1,0 +1,129 @@
+[gd_scene load_steps=17 format=3 uid="uid://bgewt83l7yice"]
+
+[ext_resource type="Script" path="res://Source/Actors/Enemies/PurpleSlime/purple_slime_enemy.gd" id="1_2kq1f"]
+[ext_resource type="Texture2D" uid="uid://dyr2y8d4jyxcp" path="res://Retribution 8-Bit Project Assests/EnemySprites/Slime.png" id="2_tn3iq"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="3_op62g"]
+[ext_resource type="PackedScene" uid="uid://g4e18e0xq4c3" path="res://Source/Hitboxes and Hurtboxes/hitbox.tscn" id="4_uide7"]
+[ext_resource type="PackedScene" uid="uid://bdayujo711hgp" path="res://Source/Actors/stats.tscn" id="5_3vglt"]
+[ext_resource type="PackedScene" uid="uid://c3eqck87vghmd" path="res://Source/Hitboxes and Hurtboxes/player_detection_zone.tscn" id="6_rkew1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2ssb"]
+atlas = ExtResource("2_tn3iq")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfwe1"]
+atlas = ExtResource("2_tn3iq")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqrcf"]
+atlas = ExtResource("2_tn3iq")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jraix"]
+atlas = ExtResource("2_tn3iq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ly4l8"]
+atlas = ExtResource("2_tn3iq")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tdt0y"]
+animations = [{
+"frames": [{
+"duration": 0.6,
+"texture": SubResource("AtlasTexture_p2ssb")
+}, {
+"duration": 0.6,
+"texture": SubResource("AtlasTexture_wfwe1")
+}, {
+"duration": 0.6,
+"texture": SubResource("AtlasTexture_lqrcf")
+}],
+"loop": true,
+"name": &"Damaged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jraix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ly4l8")
+}],
+"loop": true,
+"name": &"Move",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6j5mh"]
+size = Vector2(14, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qcbq8"]
+size = Vector2(14, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_70t0c"]
+size = Vector2(14, 9)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_occra"]
+radius = 345.001
+
+[node name="PurpleSlimeEnemy" type="CharacterBody2D"]
+collision_layer = 0
+floor_constant_speed = true
+script = ExtResource("1_2kq1f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_tdt0y")
+animation = &"Move"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_6j5mh")
+
+[node name="LedgeCheckRight" type="RayCast2D" parent="."]
+position = Vector2(7, 0)
+target_position = Vector2(0, 0.1)
+
+[node name="LedgeCheckLeft" type="RayCast2D" parent="."]
+position = Vector2(-7, 0)
+target_position = Vector2(0, 0.1)
+
+[node name="HurtTimer" type="Timer" parent="."]
+wait_time = 0.35
+one_shot = true
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_op62g")]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+self_modulate = Color(1, 0, 1, 1)
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_qcbq8")
+
+[node name="Hitbox" parent="." instance=ExtResource("4_uide7")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_70t0c")
+
+[node name="Stats" parent="." instance=ExtResource("5_3vglt")]
+max_health = 2
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource("6_rkew1")]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+self_modulate = Color(1, 1, 1, 0.0235294)
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_occra")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+
+[editable path="Hurtbox"]
+[editable path="Hitbox"]
+[editable path="PlayerDetectionZone"]

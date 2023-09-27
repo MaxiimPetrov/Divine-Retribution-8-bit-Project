@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://iepycknka3hp"]
+
+[ext_resource type="Script" path="res://Source/Level Creation/brazier.gd" id="1_i4ddh"]
+[ext_resource type="Texture2D" uid="uid://6nqnu5k83bji" path="res://Retribution 8-Bit Project Assests/PickUpsSprites/Brazier.png" id="2_ytlcx"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="3_xlcuq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4hui"]
+atlas = ExtResource("2_ytlcx")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2w2q4"]
+atlas = ExtResource("2_ytlcx")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0d3gh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4hui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2w2q4")
+}],
+"loop": true,
+"name": &"Effect",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jhgld"]
+size = Vector2(16, 28)
+
+[node name="Brazier" type="Node2D"]
+z_index = 3
+script = ExtResource("1_i4ddh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0d3gh")
+animation = &"Effect"
+autoplay = "Effect"
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_xlcuq")]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_jhgld")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+
+[editable path="Hurtbox"]

@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://cvsuae4hv4c4g"]
+
+[ext_resource type="PackedScene" uid="uid://g4e18e0xq4c3" path="res://Source/Hitboxes and Hurtboxes/hitbox.tscn" id="1_7tqe8"]
+[ext_resource type="Script" path="res://Source/Actors/Enemies/Garglius(BOSS)/garglius_ball.gd" id="1_isehu"]
+[ext_resource type="Texture2D" uid="uid://pt54gye8443i" path="res://Retribution 8-Bit Project Assests/EnemySprites/GargliusProjectile.png" id="2_r4pdm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8m458"]
+atlas = ExtResource("2_r4pdm")
+region = Rect2(0, 0, 14, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yy6wa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8m458")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sd6yt"]
+size = Vector2(5, 5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3nfjd"]
+radius = 7.0
+
+[node name="GargliusBall" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_isehu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 1, 0.976471, 1)
+z_index = 7
+scale = Vector2(1.28571, 1.28571)
+sprite_frames = SubResource("SpriteFrames_yy6wa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sd6yt")
+
+[node name="Hitbox" parent="." instance=ExtResource("1_7tqe8")]
+collision_layer = 16
+collision_mask = 0
+damage = 2
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("CircleShape2D_3nfjd")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+
+[editable path="Hitbox"]

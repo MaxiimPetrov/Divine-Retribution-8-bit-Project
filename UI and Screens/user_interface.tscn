@@ -1,0 +1,135 @@
+[gd_scene load_steps=9 format=3 uid="uid://vy3jqxat8alg"]
+
+[ext_resource type="Script" path="res://Source/UI and Screens/user_interface.gd" id="1_5y70v"]
+[ext_resource type="Texture2D" uid="uid://coc6qw0badt5n" path="res://Retribution 8-Bit Project Assests/HUD/HUD.png" id="2_wbbs0"]
+[ext_resource type="Texture2D" uid="uid://chm1dy0e4s7bk" path="res://Retribution 8-Bit Project Assests/PlayerSprites/Fireball.png" id="3_p0q4g"]
+[ext_resource type="Texture2D" uid="uid://ns7addqkk5d7" path="res://Retribution 8-Bit Project Assests/HUD/PlayerHP.png" id="4_upj4d"]
+[ext_resource type="Texture2D" uid="uid://dh8cghs2jr0l0" path="res://Retribution 8-Bit Project Assests/HUD/EnemyHP.png" id="5_i0js5"]
+[ext_resource type="FontFile" uid="uid://c2r3ol5sn6vgy" path="res://Retribution 8-Bit Project Assests/HUD/Mystery_Font.ttf" id="6_4munf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ce1q7"]
+line_spacing = 2.0
+font_size = 10
+
+[sub_resource type="Theme" id="Theme_hxrs3"]
+default_font = ExtResource("6_4munf")
+default_font_size = 9
+
+[node name="UserInterface" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5y70v")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 1.0
+color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="Sprite2D" parent="."]
+position = Vector2(160, 121)
+texture = ExtResource("2_wbbs0")
+
+[node name="FlameSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(213, 17)
+scale = Vector2(3, 3)
+texture = ExtResource("3_p0q4g")
+region_enabled = true
+region_rect = Rect2(0, 0, 9, 5)
+
+[node name="PlayerHealth" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 12.0
+offset_right = 186.0
+offset_bottom = 19.0
+texture = ExtResource("4_upj4d")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="EnemyHealth" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 22.0
+offset_right = 186.0
+offset_bottom = 29.0
+texture = ExtResource("5_i0js5")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="EssenceLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -61.0
+offset_top = 12.0
+offset_right = -9.0
+offset_bottom = 28.0
+grow_horizontal = 0
+text = "%s"
+label_settings = SubResource("LabelSettings_ce1q7")
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 1.0
+offset_right = 185.0
+offset_bottom = 17.0
+theme = SubResource("Theme_hxrs3")
+text = "%s"
+
+[node name="PauseOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.54902)
+
+[node name="Label" type="Label" parent="PauseOverlay"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.5
+offset_top = 69.0
+offset_right = 28.5
+offset_bottom = 95.0
+grow_horizontal = 2
+text = "paused"
+
+[node name="PauseMenu" type="VBoxContainer" parent="PauseOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -20.0
+offset_right = 56.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" type="Button" parent="PauseOverlay/PauseMenu"]
+layout_mode = 2
+mouse_filter = 2
+text = "resume"
+
+[node name="QuitButton" type="Button" parent="PauseOverlay/PauseMenu"]
+layout_mode = 2
+mouse_filter = 2
+text = "return to menu"
+
+[connection signal="button_up" from="PauseOverlay/PauseMenu/ResumeButton" to="." method="_on_resume_button_button_up"]
+[connection signal="button_up" from="PauseOverlay/PauseMenu/QuitButton" to="." method="_on_quit_button_button_up"]

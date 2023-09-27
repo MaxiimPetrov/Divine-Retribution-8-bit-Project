@@ -1,0 +1,162 @@
+[gd_scene load_steps=18 format=3 uid="uid://clnu325ni0ui8"]
+
+[ext_resource type="Texture2D" uid="uid://b7x0s68eadnk3" path="res://Retribution 8-Bit Project Assests/PickUpsSprites/FirePickup.png" id="1_fw6fw"]
+[ext_resource type="Script" path="res://Source/Level Creation/flame_pickup.gd" id="1_u6fse"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="3_uwwrq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8nb0e"]
+size = Vector2(4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsswv"]
+atlas = ExtResource("1_fw6fw")
+region = Rect2(0, 0, 8, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmqfd"]
+atlas = ExtResource("1_fw6fw")
+region = Rect2(8, 0, 8, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ji7hk"]
+atlas = ExtResource("1_fw6fw")
+region = Rect2(16, 0, 8, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wvxr"]
+atlas = ExtResource("1_fw6fw")
+region = Rect2(24, 0, 8, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbiup"]
+atlas = ExtResource("1_fw6fw")
+region = Rect2(32, 0, 8, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r13p4"]
+atlas = ExtResource("1_fw6fw")
+region = Rect2(40, 0, 8, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vk3jy"]
+atlas = ExtResource("1_fw6fw")
+region = Rect2(48, 0, 8, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sqkn8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hsswv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmqfd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ji7hk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0wvxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbiup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r13p4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vk3jy")
+}],
+"loop": true,
+"name": &"Default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m83eo"]
+size = Vector2(8, 16)
+
+[sub_resource type="Animation" id="Animation_17o5v"]
+resource_name = "FlickerEffect(Fast)"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jbcwg"]
+resource_name = "FlickerEffect(Slow)"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tv0hy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.980392)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7ewo4"]
+_data = {
+"FlickerEffect(Fast)": SubResource("Animation_17o5v"),
+"FlickerEffect(Slow)": SubResource("Animation_jbcwg"),
+"RESET": SubResource("Animation_tv0hy")
+}
+
+[node name="FlamePickup" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_u6fse")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_8nb0e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.980392)
+z_index = 4
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_sqkn8")
+animation = &"Default"
+autoplay = "Default"
+frame_progress = 0.79352
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_uwwrq")]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_m83eo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7ewo4")
+}
+
+[node name="DisappearTimer" type="Timer" parent="."]
+wait_time = 13.0
+one_shot = true
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+
+[editable path="Hurtbox"]

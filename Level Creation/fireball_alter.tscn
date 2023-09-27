@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://c75te63qkw0ie"]
+
+[ext_resource type="Texture2D" uid="uid://dsirrcuy6xpqx" path="res://Retribution 8-Bit Project Assests/PickUpsSprites/FireAltar.png" id="1_1f56h"]
+[ext_resource type="Script" path="res://Source/Level Creation/fireball_alter.gd" id="1_vb7ta"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="2_cbymm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sskg2"]
+atlas = ExtResource("1_1f56h")
+region = Rect2(14, 0, 14, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b3xi"]
+atlas = ExtResource("1_1f56h")
+region = Rect2(0, 0, 14, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_umwin"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sskg2")
+}],
+"loop": false,
+"name": &"Broken",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3b3xi")
+}],
+"loop": false,
+"name": &"Unbroken",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kkya6"]
+size = Vector2(28, 20)
+
+[node name="FireballAlter" type="Node2D"]
+script = ExtResource("1_vb7ta")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 3
+position = Vector2(0, -10)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_umwin")
+animation = &"Unbroken"
+autoplay = "Unbroken"
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_cbymm")]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_kkya6")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+
+[editable path="Hurtbox"]

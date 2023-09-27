@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://cu7kd1mnxcvl7"]
+
+[ext_resource type="Script" path="res://Source/Actors/Player/Abilities/FireballHitEffect.gd" id="1_r37fi"]
+[ext_resource type="Texture2D" uid="uid://bqodjmkt0ltu5" path="res://Retribution 8-Bit Project Assests/PlayerSprites/Cast_FX.png" id="2_0iwsw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjkbu"]
+atlas = ExtResource("2_0iwsw")
+region = Rect2(288, 0, 72, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xt5y0"]
+atlas = ExtResource("2_0iwsw")
+region = Rect2(360, 0, 72, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q4glk"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jjkbu")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_xt5y0")
+}],
+"loop": false,
+"name": &"Effect",
+"speed": 5.0
+}]
+
+[node name="FireballHitEffect" type="Node2D"]
+script = ExtResource("1_r37fi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 6
+sprite_frames = SubResource("SpriteFrames_q4glk")
+animation = &"Effect"
+frame = 1
+frame_progress = 0.0341863
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

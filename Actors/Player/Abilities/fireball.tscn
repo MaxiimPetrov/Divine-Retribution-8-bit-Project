@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://b6nuhwaloh8fh"]
+
+[ext_resource type="Script" path="res://Source/Actors/Player/Abilities/fireball.gd" id="1_ubmut"]
+[ext_resource type="Texture2D" uid="uid://chm1dy0e4s7bk" path="res://Retribution 8-Bit Project Assests/PlayerSprites/Fireball.png" id="2_8688r"]
+[ext_resource type="PackedScene" uid="uid://g4e18e0xq4c3" path="res://Source/Hitboxes and Hurtboxes/hitbox.tscn" id="3_7n55t"]
+[ext_resource type="PackedScene" uid="uid://c3eqck87vghmd" path="res://Source/Hitboxes and Hurtboxes/player_detection_zone.tscn" id="4_es5kr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xuwdx"]
+size = Vector2(16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdlfs"]
+atlas = ExtResource("2_8688r")
+region = Rect2(0, 0, 8, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gnjl"]
+atlas = ExtResource("2_8688r")
+region = Rect2(8, 0, 8, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1pjfe"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_cdlfs")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_7gnjl")
+}],
+"loop": true,
+"name": &"Fireball",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j2648"]
+size = Vector2(16, 8)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u7jr1"]
+radius = 8.0
+height = 26.0
+
+[node name="Fireball" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ubmut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xuwdx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 6
+scale = Vector2(2, 1.6)
+sprite_frames = SubResource("SpriteFrames_1pjfe")
+animation = &"Fireball"
+autoplay = "Fireball"
+frame_progress = 0.441972
+
+[node name="Hitbox" parent="." instance=ExtResource("3_7n55t")]
+collision_layer = 4
+collision_mask = 32
+damage = 2
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+self_modulate = Color(1, 0, 1, 1)
+shape = SubResource("RectangleShape2D_j2648")
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource("4_es5kr")]
+collision_layer = 1
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+position = Vector2(0, 10)
+shape = SubResource("CapsuleShape2D_u7jr1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+
+[editable path="Hitbox"]
+[editable path="PlayerDetectionZone"]

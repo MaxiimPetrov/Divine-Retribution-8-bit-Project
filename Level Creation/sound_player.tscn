@@ -1,0 +1,99 @@
+[gd_scene load_steps=20 format=3 uid="uid://bmkwrymbvebto"]
+
+[ext_resource type="AudioStream" uid="uid://bnpq2uei26k2f" path="res://Retribution 8-Bit Project Assests/Sounds/Pickup.wav" id="1_p7lwh"]
+[ext_resource type="Script" path="res://Source/Level Creation/sound_player.gd" id="1_yg5tw"]
+[ext_resource type="AudioStream" uid="uid://de85u4w81ggun" path="res://Retribution 8-Bit Project Assests/Sounds/Pickup_Coin9.wav" id="3_okwhe"]
+[ext_resource type="AudioStream" uid="uid://chvqvntmdi5sh" path="res://Retribution 8-Bit Project Assests/Sounds/BlockDestroyed.wav" id="4_ivb8r"]
+[ext_resource type="AudioStream" uid="uid://bcjjpiqq68xsx" path="res://Retribution 8-Bit Project Assests/Sounds/DeathBlow.wav" id="5_5ixpt"]
+[ext_resource type="AudioStream" uid="uid://vq2oesp2yc1g" path="res://Retribution 8-Bit Project Assests/Sounds/DeathJingle.wav" id="6_h21o1"]
+[ext_resource type="AudioStream" uid="uid://cb2chl1jm35gu" path="res://Retribution 8-Bit Project Assests/Sounds/GargliusLaserEyes.wav" id="7_t2kk5"]
+[ext_resource type="AudioStream" uid="uid://cq8xbnb753q8h" path="res://Retribution 8-Bit Project Assests/Sounds/GargliusWings.wav" id="8_rhq8u"]
+[ext_resource type="AudioStream" uid="uid://djqdstgqilctb" path="res://Retribution 8-Bit Project Assests/Sounds/PickupFireball.wav" id="9_8yr7s"]
+[ext_resource type="AudioStream" uid="uid://cqbaved202hci" path="res://Retribution 8-Bit Project Assests/Sounds/PickupHealth.wav" id="10_6pn2q"]
+[ext_resource type="AudioStream" uid="uid://xre0mrjauwts" path="res://Retribution 8-Bit Project Assests/Sounds/Hurt.wav" id="11_l077j"]
+[ext_resource type="AudioStream" uid="uid://cn41dw5l2mske" path="res://Retribution 8-Bit Project Assests/Sounds/StartupJingle.wav" id="12_5wu3l"]
+[ext_resource type="AudioStream" uid="uid://cf6qxx4ig42k5" path="res://Retribution 8-Bit Project Assests/Sounds/Whip.wav" id="13_bqaxy"]
+[ext_resource type="AudioStream" uid="uid://ckbkq7gaumtjr" path="res://Retribution 8-Bit Project Assests/Sounds/WhipHit.wav" id="14_g14ov"]
+[ext_resource type="AudioStream" uid="uid://dtxpraskytbgk" path="res://Retribution 8-Bit Project Assests/Sounds/20230819_Divine_Retribution_-_Ruined_Grounds_v5.mp3" id="15_ay7rx"]
+[ext_resource type="AudioStream" uid="uid://dy4a5cd06qcpa" path="res://Retribution 8-Bit Project Assests/Sounds/FireballCast.wav" id="16_3ykjb"]
+[ext_resource type="AudioStream" uid="uid://ci3ldq4iag6jq" path="res://Retribution 8-Bit Project Assests/Sounds/20230822_Divine_Retribution_-_Boss_Theme_v3.mp3" id="17_iqby5"]
+[ext_resource type="AudioStream" uid="uid://cgdkca0d3scr0" path="res://Retribution 8-Bit Project Assests/Sounds/GargliusDeath.wav" id="18_ouqhp"]
+[ext_resource type="AudioStream" uid="uid://c0bxpy2iu6bod" path="res://Retribution 8-Bit Project Assests/Sounds/Victory.wav" id="19_pkb87"]
+
+[node name="SoundPlayer" type="Node"]
+script = ExtResource("1_yg5tw")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="EssencePickupSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("1_p7lwh")
+bus = &"SoundEffectsLoud"
+
+[node name="ScorePickupSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("3_okwhe")
+bus = &"SoundEffects"
+
+[node name="BlockDestroyedSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_ivb8r")
+bus = &"SoundEffects"
+
+[node name="DeathBlowSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("5_5ixpt")
+bus = &"SoundEffects"
+
+[node name="DeathJingleSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("6_h21o1")
+bus = &"SoundEffects"
+
+[node name="GargliusLaserSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("7_t2kk5")
+bus = &"SoundEffects"
+
+[node name="GargliusWingsSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_rhq8u")
+bus = &"SoundEffects"
+
+[node name="FireballPickupSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_8yr7s")
+bus = &"SoundEffects"
+
+[node name="HealthPickupSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("10_6pn2q")
+bus = &"SoundEffects"
+
+[node name="PlayerHurtSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("11_l077j")
+bus = &"SoundEffectsQuiet"
+
+[node name="StartupJingleSound" type="AudioStreamPlayer" parent="Sounds"]
+process_mode = 3
+stream = ExtResource("12_5wu3l")
+bus = &"SoundEffects"
+
+[node name="WhipSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("13_bqaxy")
+bus = &"SoundEffects"
+
+[node name="WhipHitSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("14_g14ov")
+bus = &"SoundEffectsQuiet"
+
+[node name="FireballCastSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("16_3ykjb")
+bus = &"Fireball"
+
+[node name="StageMusicSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("15_ay7rx")
+bus = &"Music"
+
+[node name="BossMusicSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("17_iqby5")
+bus = &"Music"
+
+[node name="GargliusDeathEffect" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("18_ouqhp")
+bus = &"SoundEffects"
+
+[node name="VictorySoundEffect" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("19_pkb87")
+bus = &"SoundEffects"

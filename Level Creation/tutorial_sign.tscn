@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnntsh2xym14e"]
+
+[ext_resource type="Script" path="res://Source/Level Creation/tutorial_sign.gd" id="1_ilmon"]
+[ext_resource type="Texture2D" uid="uid://b8gbmlr02r4s7" path="res://Retribution 8-Bit Project Assests/TilemapSprites/TutorialSign.png" id="1_y3g4c"]
+[ext_resource type="Texture2D" uid="uid://fok4hbx32ddn" path="res://Retribution 8-Bit Project Assests/TilemapSprites/SignTBox.png" id="2_3motu"]
+[ext_resource type="PackedScene" uid="uid://c3eqck87vghmd" path="res://Source/Hitboxes and Hurtboxes/player_detection_zone.tscn" id="4_xk5ga"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fhrp"]
+size = Vector2(16, 30)
+
+[node name="TutorialSign" type="Node2D"]
+script = ExtResource("1_ilmon")
+
+[node name="SignSprite" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(0, -16)
+texture = ExtResource("1_y3g4c")
+
+[node name="TextBox" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(0, -88)
+texture = ExtResource("2_3motu")
+
+[node name="Label" type="Label" parent="."]
+z_index = 3
+offset_left = -47.0
+offset_top = -130.0
+offset_right = -7.0
+offset_bottom = -116.0
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource("4_xk5ga")]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_4fhrp")
+
+[editable path="PlayerDetectionZone"]

@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=3 uid="uid://csjbcu2hnp7fi"]
+
+[ext_resource type="Script" path="res://Source/Actors/Enemies/Effects/spawn_mist_effect.gd" id="1_6ibn5"]
+[ext_resource type="Texture2D" uid="uid://x1qi5pbny1yb" path="res://Retribution 8-Bit Project Assests/EnemySprites/SpawnMist.png" id="1_72ys5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejna1"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5bif"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44b6j"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hob3a"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdnoo"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8vti"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0pdi"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqb06"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rks3"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0g2vy"]
+atlas = ExtResource("1_72ys5")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0tfhw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejna1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5bif")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44b6j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hob3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdnoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8vti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0pdi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqb06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rks3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0g2vy")
+}],
+"loop": true,
+"name": &"Effect",
+"speed": 5.0
+}]
+
+[node name="SpawnMistEffect" type="Node2D"]
+script = ExtResource("1_6ibn5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 5
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_0tfhw")
+animation = &"Effect"
+frame_progress = 0.714424
+
+[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]

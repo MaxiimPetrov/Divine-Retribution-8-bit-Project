@@ -1,0 +1,103 @@
+[gd_scene load_steps=10 format=3 uid="uid://bt6r8hubvqqbk"]
+
+[ext_resource type="PackedScene" uid="uid://c3eqck87vghmd" path="res://Source/Hitboxes and Hurtboxes/player_detection_zone.tscn" id="1_ci3uj"]
+[ext_resource type="Script" path="res://Source/Level Creation/score_drop_small.gd" id="1_o1ewt"]
+[ext_resource type="Texture2D" uid="uid://cwwkf8ioaafvh" path="res://Retribution 8-Bit Project Assests/PickUpsSprites/ScorePickup.png" id="2_budfs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_44vba"]
+size = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a2syd"]
+size = Vector2(12, 12)
+
+[sub_resource type="Animation" id="Animation_jl2ym"]
+resource_name = "FlickerEffect(fast)"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tvurl"]
+resource_name = "FlickerEffect(slow)"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0yyqr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6fejm"]
+_data = {
+"FlickerEffect(fast)": SubResource("Animation_jl2ym"),
+"FlickerEffect(slow)": SubResource("Animation_tvurl"),
+"RESET": SubResource("Animation_0yyqr")
+}
+
+[node name="ScoreDropSmall" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_o1ewt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(0, -6)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_budfs")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_44vba")
+
+[node name="DetectionZone" parent="." instance=ExtResource("1_ci3uj")]
+collision_mask = 128
+
+[node name="CollisionShape2D" parent="DetectionZone" index="0"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_a2syd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6fejm")
+}
+
+[node name="DisappearTimer" type="Timer" parent="."]
+wait_time = 13.0
+one_shot = true
+
+[connection signal="area_entered" from="DetectionZone" to="." method="_on_detection_zone_area_entered"]
+
+[editable path="DetectionZone"]

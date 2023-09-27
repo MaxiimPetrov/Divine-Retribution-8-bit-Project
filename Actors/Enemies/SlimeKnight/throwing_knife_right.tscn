@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://bw7w3xgwrhm0b"]
+
+[ext_resource type="Script" path="res://Source/Actors/Enemies/SlimeKnight/throwing_knife_right.gd" id="1_ly07i"]
+[ext_resource type="Texture2D" uid="uid://b6yq2rh6n31sj" path="res://Retribution 8-Bit Project Assests/EnemySprites/Knife.png" id="2_qp27n"]
+[ext_resource type="PackedScene" uid="uid://g4e18e0xq4c3" path="res://Source/Hitboxes and Hurtboxes/hitbox.tscn" id="3_ya1kg"]
+[ext_resource type="PackedScene" uid="uid://c3eqck87vghmd" path="res://Source/Hitboxes and Hurtboxes/player_detection_zone.tscn" id="4_bnpro"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="5_y5gn1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ncad"]
+atlas = ExtResource("2_qp27n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agq2s"]
+atlas = ExtResource("2_qp27n")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u67hu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ncad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agq2s")
+}],
+"loop": true,
+"name": &"Thrown",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p4s3q"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iai5y"]
+size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmul5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4l1h4"]
+
+[node name="ThrowingKnifeRight" type="CharacterBody2D"]
+collision_layer = 64
+script = ExtResource("1_ly07i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+sprite_frames = SubResource("SpriteFrames_u67hu")
+animation = &"Thrown"
+autoplay = "Thrown"
+frame_progress = 0.766964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_p4s3q")
+
+[node name="Hitbox" parent="." instance=ExtResource("3_ya1kg")]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("RectangleShape2D_iai5y")
+
+[node name="EnemyDetectionZone" parent="." instance=ExtResource("4_bnpro")]
+collision_mask = 66
+
+[node name="CollisionShape2D" parent="EnemyDetectionZone" index="0"]
+shape = SubResource("RectangleShape2D_cmul5")
+
+[node name="Hurtbox" parent="." instance=ExtResource("5_y5gn1")]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("RectangleShape2D_4l1h4")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 0.8)
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered" flags=18]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+
+[editable path="Hitbox"]
+[editable path="EnemyDetectionZone"]
+[editable path="Hurtbox"]

@@ -1,0 +1,391 @@
+[gd_scene load_steps=35 format=3 uid="uid://bmtxin1ark4ms"]
+
+[ext_resource type="Script" path="res://Source/Actors/Enemies/SlimeKnight/slime_knight_enemy.gd" id="1_cupu0"]
+[ext_resource type="PackedScene" uid="uid://c3eqck87vghmd" path="res://Source/Hitboxes and Hurtboxes/player_detection_zone.tscn" id="1_kfce6"]
+[ext_resource type="Texture2D" uid="uid://cuqhyld8243jx" path="res://Retribution 8-Bit Project Assests/EnemySprites/KnightSlash.png" id="1_wk7vv"]
+[ext_resource type="Texture2D" uid="uid://cmsc7wt6p4uw1" path="res://Retribution 8-Bit Project Assests/EnemySprites/KnightThrow.png" id="2_2gxx8"]
+[ext_resource type="PackedScene" uid="uid://bdayujo711hgp" path="res://Source/Actors/stats.tscn" id="2_3np2r"]
+[ext_resource type="Texture2D" uid="uid://dd5gpd11nqxt6" path="res://Retribution 8-Bit Project Assests/EnemySprites/KnightWalk.png" id="3_w0l6o"]
+[ext_resource type="PackedScene" uid="uid://bukb475eoh7gg" path="res://Source/Hitboxes and Hurtboxes/hurtbox.tscn" id="7_7gewp"]
+[ext_resource type="PackedScene" uid="uid://g4e18e0xq4c3" path="res://Source/Hitboxes and Hurtboxes/hitbox.tscn" id="8_67jh7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87fro"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(0, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsgx4"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(70, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdshn"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(140, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6s1yr"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(210, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20vi7"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(280, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3sip"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(350, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0582u"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(420, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v1c3"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(0, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q44ak"]
+atlas = ExtResource("1_wk7vv")
+region = Rect2(210, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfuid"]
+atlas = ExtResource("2_2gxx8")
+region = Rect2(0, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p41t6"]
+atlas = ExtResource("2_2gxx8")
+region = Rect2(70, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gpnu"]
+atlas = ExtResource("2_2gxx8")
+region = Rect2(140, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gf7yc"]
+atlas = ExtResource("2_2gxx8")
+region = Rect2(210, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayeif"]
+atlas = ExtResource("3_w0l6o")
+region = Rect2(0, 0, 70, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihv4e"]
+atlas = ExtResource("3_w0l6o")
+region = Rect2(70, 0, 70, 52)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_34p4p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87fro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsgx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vdshn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6s1yr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20vi7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3sip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0582u")
+}],
+"loop": true,
+"name": &"Attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_1v1c3")
+}, {
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_q44ak")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfuid")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p41t6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gpnu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gf7yc")
+}],
+"loop": true,
+"name": &"Throw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayeif")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ihv4e")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_kjhrm"]
+resource_name = "Melee_Attack"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 3, 3, 4, 5, 6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AxeHitboxPivot/Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"melee_attack_animation_finished"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ubp55"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Throw"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AxeHitboxPivot/Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_pkwam"]
+resource_name = "Ranged_Attack"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Throw"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"throw_knife"
+}, {
+"args": [],
+"method": &"ranged_attack_animation_finished"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m06y2"]
+_data = {
+"Melee_Attack": SubResource("Animation_kjhrm"),
+"RESET": SubResource("Animation_ubp55"),
+"Ranged_Attack": SubResource("Animation_pkwam")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vnrd1"]
+size = Vector2(17, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_whbxx"]
+size = Vector2(792, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uqc3b"]
+size = Vector2(128, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6aukb"]
+size = Vector2(17, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3kuq"]
+size = Vector2(42, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5c1n8"]
+size = Vector2(17, 32)
+
+[node name="SlimeKnightEnemy" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_cupu0")
+
+[node name="Stats" parent="." instance=ExtResource("2_3np2r")]
+max_health = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(0, -24)
+sprite_frames = SubResource("SpriteFrames_34p4p")
+animation = &"Throw"
+offset = Vector2(-8.5, -2)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_m06y2")
+}
+
+[node name="WorldCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, -16)
+shape = SubResource("RectangleShape2D_vnrd1")
+
+[node name="SwitchToRangedStateTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="MeleeTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="PlayerDetectionZoneFar" parent="." instance=ExtResource("1_kfce6")]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZoneFar" index="0"]
+self_modulate = Color(1, 0, 1, 1)
+position = Vector2(180, -32)
+shape = SubResource("RectangleShape2D_whbxx")
+
+[node name="PlayerDetectionZoneClose" parent="." instance=ExtResource("1_kfce6")]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZoneClose" index="0"]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_uqc3b")
+
+[node name="Hurtbox" parent="." instance=ExtResource("7_7gewp")]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+self_modulate = Color(1, 1, 0.0666667, 1)
+position = Vector2(2.5, -16)
+shape = SubResource("RectangleShape2D_6aukb")
+
+[node name="AxeHitboxPivot" type="Marker2D" parent="."]
+position = Vector2(0, -24)
+
+[node name="Hitbox" parent="AxeHitboxPivot" instance=ExtResource("8_67jh7")]
+position = Vector2(0, -16)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="AxeHitboxPivot/Hitbox" index="0"]
+position = Vector2(21, 16)
+shape = SubResource("RectangleShape2D_k3kuq")
+disabled = true
+
+[node name="BodyHitbox" parent="." instance=ExtResource("8_67jh7")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="BodyHitbox" index="0"]
+position = Vector2(2.5, -16)
+shape = SubResource("RectangleShape2D_5c1n8")
+
+[node name="LedgeCheckLeft" type="RayCast2D" parent="."]
+position = Vector2(-6, 0)
+target_position = Vector2(0, 4)
+
+[node name="LedgeCheckRight" type="RayCast2D" parent="."]
+position = Vector2(11, 0)
+target_position = Vector2(0, 4)
+
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+
+[editable path="PlayerDetectionZoneFar"]
+[editable path="PlayerDetectionZoneClose"]
+[editable path="Hurtbox"]
+[editable path="AxeHitboxPivot/Hitbox"]
+[editable path="BodyHitbox"]

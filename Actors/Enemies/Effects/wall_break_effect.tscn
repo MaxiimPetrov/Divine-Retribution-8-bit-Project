@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://do3n6kbc658ur"]
+
+[ext_resource type="Texture2D" uid="uid://b4kcgtfiu3u81" path="res://Retribution 8-Bit Project Assests/PickUpsSprites/BreakFX.png" id="1_kwc08"]
+[ext_resource type="Script" path="res://Source/Actors/Enemies/Effects/wall_break_effect.gd" id="1_w32x0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyvi1"]
+atlas = ExtResource("1_kwc08")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5s28"]
+atlas = ExtResource("1_kwc08")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cboi"]
+atlas = ExtResource("1_kwc08")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nw055"]
+atlas = ExtResource("1_kwc08")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2k0x"]
+atlas = ExtResource("1_kwc08")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rpiuj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cyvi1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5s28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cboi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nw055")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2k0x")
+}],
+"loop": false,
+"name": &"Default",
+"speed": 10.0
+}]
+
+[node name="WallBreakEffect" type="Node2D"]
+script = ExtResource("1_w32x0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 3
+sprite_frames = SubResource("SpriteFrames_rpiuj")
+animation = &"Default"
+autoplay = "Default"
+frame = 4
+frame_progress = 1.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
